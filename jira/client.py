@@ -1506,6 +1506,40 @@ class JIRA(object):
             params['expand'] = expand
         return self._get_json('issue/createmeta', params)
 
+    def createmeta_issue_types(self, projectIdOrKey, startAt = 0, maxResults = 50):
+        """Get the issue types for the given project.
+
+        :param projectIdOrKey: The key of the project to filter the results with.
+        :type projectIdOrKey: str
+        :param startAt: The first result in the page of data to be returned.
+        :type startAt: Optional[int]
+        :param maxResults: The maximum number of results to return on a single page. Any number larger than 1000
+            will be treated as 1000.
+        :type maxResults: Optional[int]
+        :rtype: Dict[str, Any]
+
+        """
+        params = { 'startAt': startAt, 'maxResults': maxResults }
+        return self._get_json('issue/createmeta2/{}/issuetypes'.format(projectId), params)
+
+    def createmeta_fields(self, projectId, issueTypeId, startAt = 0, maxResults = 50):
+        """Get the fields for the given issue type.
+
+        :param projectIdOrKey: The key of the project to filter the results with.
+        :type projectIdOrKey: str
+        :param issueTypeId: The key of the issue type to get the fields for.
+        :type issueTypeId: str
+        :param startAt: The first result in the page of data to be returned.
+        :type startAt: Optional[int]
+        :param maxResults: The maximum number of results to return on a single page. Any number larger than 1000
+            will be treated as 1000.
+        :type maxResults: Optional[int]
+        :rtype: Dict[str, Any]
+
+        """
+        params = { 'startAt': startAt, 'maxResults': maxResults }
+        return self._get_json('issue/createmeta2/{}/issuetypes/{}'.format(projectId, issueTypeId), params)
+
     # non-resource
     @translate_resource_args
     def assign_issue(self, issue, assignee):

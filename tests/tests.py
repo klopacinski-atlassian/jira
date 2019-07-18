@@ -998,6 +998,16 @@ class IssueTests(unittest.TestCase):
                                     expand='projects.issuetypes.fields')
         self.assertTrue('fields' in meta['projects'][0]['issuetypes'][0])
 
+    def test_createmeta2_issue_types(self):
+        meta = self.jira.createmeta_issue_types(projectId=self.project_b)
+        print(meta)
+        self.assertEqual(2, len(meta['values']))
+
+    def test_createmeta2_fields(self):
+        meta = self.jira.createmeta_fields(projectId=self.project_b, issueTypeId="10000")
+        print(meta)
+        self.assertEqual(11, len(meta['values']))
+
     def test_assign_issue(self):
         self.assertTrue(self.jira.assign_issue(self.issue_1, self.test_manager.CI_JIRA_ADMIN))
         self.assertEqual(self.jira.issue(self.issue_1).fields.assignee.name,
